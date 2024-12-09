@@ -89,3 +89,13 @@ ns-train sn2n --data data/bear-grizzly --load-dir outputs/bear/nerfacto/{XXX}/ne
 - More code cleaning-up
 - Add support for style blending
 - And possibly more...
+
+## Citation
+```
+@inproceedings{fujiwara2024sn2n,
+    title     = {Style-NeRF2NeRF: 3D Style Transfer from Style-Aligned Multi-View Images},
+    author    = {Haruo Fujiwara and Yusuke Mukuta and Tatsuya Harada},
+    booktitle = {SIGGRAPH Asia 2024 Conference Papers},
+    year      = {2024}
+}
+```
