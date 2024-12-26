@@ -133,14 +133,14 @@ class Sn2nDataset(InputDataset):
         #    data["image"] = torch.where(
         #        data["mask"] == 1.0, data["image"], torch.ones_like(data["image"]) * torch.tensor(self.mask_color)
         #    )
-        if self._dataparser_outputs.metadata['image_second_filenames'] is not None:
+        if 'image_second_filenames' in self._dataparser_outputs.metadata:  #self._dataparser_outputs.metadata['image_second_filenames'] is not None:
             image_second_filepath = self._dataparser_outputs.metadata['image_second_filenames'][image_idx]
             if image_type == "float32":
                 image_second = self.get_image_float32_2(image_idx)
             elif image_type == "uint8":
                 image_second = self.get_image_uint8_2(image_idx)
             data["image_second"] = image_second
-        if self._dataparser_outputs.metadata['tag_filenames'] is not None:
+        if 'tag_filenames' in self._dataparser_outputs.metadata: #self._dataparser_outputs.metadata['tag_filenames'] is not None:
             tag_filepath = self._dataparser_outputs.metadata['tag_filenames'][image_idx]
             data["tag"] = get_image_mask_tensor_from_path(filepath=tag_filepath, scale_factor=self.scale_factor)
             assert (
