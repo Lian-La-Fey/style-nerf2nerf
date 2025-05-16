@@ -477,23 +477,41 @@ class StylePix2Pix(nn.Module):
             )
     
         # 1. Check inputs. Raise error if not correct
-        #print('Debug controlnet_conditioning_scale', controlnet_conditioning_scale, print(isinstance(controlnet_conditioning_scale, float)))
+        print('Debug controlnet_conditioning_scale', controlnet_conditioning_scale, print(isinstance(controlnet_conditioning_scale, float)))
+        # pipeline.check_inputs(
+        #     prompt,
+        #     prompt_2,
+        #     control_image,
+        #     strength,
+        #     num_inference_steps,
+        #     1,
+        #     negative_prompt,
+        #     negative_prompt_2,
+        #     prompt_embeds,
+        #     negative_prompt_embeds,
+        #     pooled_prompt_embeds,
+        #     negative_pooled_prompt_embeds,
+        #     controlnet_conditioning_scale,
+        #     control_guidance_start,
+        #     control_guidance_end,
+        # )
+        
         pipeline.check_inputs(
-            prompt,
-            prompt_2,
-            control_image,
-            strength,
-            num_inference_steps,
-            1,
-            negative_prompt,
-            negative_prompt_2,
-            prompt_embeds,
-            negative_prompt_embeds,
-            pooled_prompt_embeds,
-            negative_pooled_prompt_embeds,
-            controlnet_conditioning_scale,
-            control_guidance_start,
-            control_guidance_end,
+            prompt=prompt,
+            prompt_2=prompt_2,
+            image=control_image,
+            strength=strength,
+            num_inference_steps=num_inference_steps,
+            callback_steps=1,
+            negative_prompt=negative_prompt,
+            negative_prompt_2=negative_prompt_2,
+            prompt_embeds=prompt_embeds,
+            negative_prompt_embeds=negative_prompt_embeds,
+            pooled_prompt_embeds=pooled_prompt_embeds,
+            negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
+            controlnet_conditioning_scale=controlnet_conditioning_scale,
+            control_guidance_start=control_guidance_start,
+            control_guidance_end=control_guidance_end,
         )
     
         pipeline._guidance_scale = guidance_scale
