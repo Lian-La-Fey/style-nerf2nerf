@@ -47,8 +47,8 @@ class StylePix2Pix(nn.Module):
         self.num_train_timesteps = num_train_timesteps
         self.sp2p_use_full_precision = sp2p_use_full_precision
 
-        self.depth_estimator = DPTForDepthEstimation.from_pretrained("Intel/dpt-small-midas").to("cuda")
-        self.feature_processor = DPTImageProcessor.from_pretrained("Intel/dpt-small-midas")
+        self.depth_estimator = DPTForDepthEstimation.from_pretrained("Intel/dpt-hybrid-midas").to("cuda")
+        self.feature_processor = DPTImageProcessor.from_pretrained("Intel/dpt-hybrid-midas")
         
         # New
         self.controlnet = ControlNetModel.from_pretrained(
