@@ -59,8 +59,7 @@ class StylePix2Pix(nn.Module):
             low_cpu_mem_usage=True,
         ).to(self.device)
         self.vae = AutoencoderKL.from_pretrained(VAE_SOURCE, torch_dtype=torch.float16, low_cpu_mem_usage=True).to(self.device)
-
-        #pipe = StableDiffusionXLControlNetPipeline.from_pretrained(
+        
         # pipe = StableDiffusionXLControlNetImg2ImgPipeline.from_pretrained(
         pipe = StableDiffusionControlNetImg2ImgPipeline.from_pretrained(
             SDXL_SOURCE,
@@ -190,11 +189,11 @@ class StylePix2Pix(nn.Module):
         # 1. Check inputs. Raise error if not correct
         pipeline.check_inputs(
             prompt,
-            prompt_2,
+            # prompt_2,
             image,
             1,
             negative_prompt,
-            negative_prompt_2,
+            # negative_prompt_2,
             prompt_embeds,
             negative_prompt_embeds,
             pooled_prompt_embeds,
@@ -503,13 +502,13 @@ class StylePix2Pix(nn.Module):
         
         pipeline.check_inputs(
             prompt=prompt,
-            prompt_2=prompt_2,
+            # prompt_2=prompt_2,
             image=control_image,
             strength=strength,
             num_inference_steps=num_inference_steps,
             callback_steps=1,
             negative_prompt=negative_prompt,
-            negative_prompt_2=negative_prompt_2,
+            # negative_prompt_2=negative_prompt_2,
             prompt_embeds=prompt_embeds,
             negative_prompt_embeds=negative_prompt_embeds,
             pooled_prompt_embeds=pooled_prompt_embeds,
