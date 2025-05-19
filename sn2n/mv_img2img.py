@@ -504,7 +504,7 @@ class StylePix2Pix(nn.Module):
             prompt=prompt,
             # prompt_2=prompt_2,
             image=control_image,
-            strength=strength,
+            # strength=strength,
             num_inference_steps=num_inference_steps,
             callback_steps=1,
             negative_prompt=negative_prompt,
