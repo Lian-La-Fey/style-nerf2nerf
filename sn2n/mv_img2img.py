@@ -15,10 +15,13 @@ from diffusers.image_processor import PipelineImageInput
 from diffusers.utils.torch_utils import is_compiled_module, is_torch_version
 from transformers import DPTImageProcessor, DPTForDepthEstimation
 
+from diffusers import StableDiffusionControlNetImg2ImgPipeline
+
 import sn2n.sa_handler as sa_handler
 
-SDXL_SOURCE = "stabilityai/stable-diffusion-xl-base-1.0"
-CONTROLNET_SOURCE = "diffusers/controlnet-depth-sdxl-1.0"
+# SDXL_SOURCE = "stabilityai/stable-diffusion-xl-base-1.0"
+SDXL_SOURCE = "runwayml/stable-diffusion-v1-5"
+CONTROLNET_SOURCE = "diffusers/controlnet-depth-sdxl-1.0-small"
 VAE_SOURCE = "madebyollin/sdxl-vae-fp16-fix"
 
 CONSOLE = Console(width=120)
@@ -44,8 +47,8 @@ class StylePix2Pix(nn.Module):
         self.num_train_timesteps = num_train_timesteps
         self.sp2p_use_full_precision = sp2p_use_full_precision
 
-        self.depth_estimator = DPTForDepthEstimation.from_pretrained("Intel/dpt-hybrid-midas").to("cuda")
-        self.feature_processor = DPTImageProcessor.from_pretrained("Intel/dpt-hybrid-midas")
+        self.depth_estimator = DPTForDepthEstimation.from_pretrained("Intel/dpt-small-midas").to("cuda")
+        self.feature_processor = DPTImageProcessor.from_pretrained("Intel/dpt-small-midas")
         
         # New
         self.controlnet = ControlNetModel.from_pretrained(
@@ -53,11 +56,13 @@ class StylePix2Pix(nn.Module):
             variant="fp16",
             use_safetensors=True,
             torch_dtype=torch.float16,
+            low_cpu_mem_usage=True,
         ).to(self.device)
-        self.vae = AutoencoderKL.from_pretrained(VAE_SOURCE, torch_dtype=torch.float16).to(self.device)
+        self.vae = AutoencoderKL.from_pretrained(VAE_SOURCE, torch_dtype=torch.float16, low_cpu_mem_usage=True).to(self.device)
 
         #pipe = StableDiffusionXLControlNetPipeline.from_pretrained(
-        pipe = StableDiffusionXLControlNetImg2ImgPipeline.from_pretrained(
+        # pipe = StableDiffusionXLControlNetImg2ImgPipeline.from_pretrained(
+        pipe = StableDiffusionControlNetImg2ImgPipeline.from_pretrained(
             SDXL_SOURCE,
             controlnet=self.controlnet,
             vae=self.vae,
