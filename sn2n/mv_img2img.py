@@ -21,8 +21,11 @@ import sn2n.sa_handler as sa_handler
 
 # SDXL_SOURCE = "stabilityai/stable-diffusion-xl-base-1.0"
 SDXL_SOURCE = "runwayml/stable-diffusion-v1-5"
-CONTROLNET_SOURCE = "diffusers/controlnet-depth-sdxl-1.0-small"
-VAE_SOURCE = "madebyollin/sdxl-vae-fp16-fix"
+# CONTROLNET_SOURCE = "diffusers/controlnet-depth-sdxl-1.0-small"
+# VAE_SOURCE = "madebyollin/sdxl-vae-fp16-fix"
+
+CONTROLNET_SOURCE = "lllyasviel/sd-controlnet-depth"
+VAE_SOURCE        = "stabilityai/sd-vae-ft-mse"
 
 CONSOLE = Console(width=120)
 
