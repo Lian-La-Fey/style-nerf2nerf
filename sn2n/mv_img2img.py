@@ -219,25 +219,35 @@ class StylePix2Pix(nn.Module):
         text_encoder_lora_scale = (
             cross_attention_kwargs.get("scale", None) if cross_attention_kwargs is not None else None
         )
-        (
-            prompt_embeds,
-            negative_prompt_embeds,
-            pooled_prompt_embeds,
-            negative_pooled_prompt_embeds,
-        ) = pipeline.encode_prompt(
-            prompt,
-            prompt_2,
-            device,
-            1,
-            True,
-            negative_prompt,
-            negative_prompt_2,
-            prompt_embeds=prompt_embeds,
+        # (
+        #     prompt_embeds,
+        #     negative_prompt_embeds,
+        #     pooled_prompt_embeds,
+        #     negative_pooled_prompt_embeds,
+        # ) = pipeline.encode_prompt(
+        #     prompt,
+        #     prompt_2,
+        #     device,
+        #     1,
+        #     True,
+        #     negative_prompt,
+        #     negative_prompt_2,
+        #     prompt_embeds=prompt_embeds,
+        #     negative_prompt_embeds=negative_prompt_embeds,
+        #     pooled_prompt_embeds=pooled_prompt_embeds,
+        #     negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
+        #     lora_scale=text_encoder_lora_scale,
+        #     clip_skip=clip_skip,
+        # )
+        
+        prompt_embeds, negative_prompt_embeds = pipeline.encode_prompt(
+            prompt=prompt,
+            device=device,
+            num_images_per_prompt=batch_size,
+            do_classifier_free_guidance=True,
+            negative_prompt=negative_prompt,
+            prompt_embeds=prompt_embeds,            # only if you really have precomputed embeddings
             negative_prompt_embeds=negative_prompt_embeds,
-            pooled_prompt_embeds=pooled_prompt_embeds,
-            negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
-            lora_scale=text_encoder_lora_scale,
-            clip_skip=clip_skip,
         )
     
         # 4. Prepare image
@@ -534,26 +544,37 @@ class StylePix2Pix(nn.Module):
         text_encoder_lora_scale = (
             cross_attention_kwargs.get("scale", None) if cross_attention_kwargs is not None else None
         )
-        (
-            prompt_embeds,
-            negative_prompt_embeds,
-            pooled_prompt_embeds,
-            negative_pooled_prompt_embeds,
-        ) = pipeline.encode_prompt(
-            prompt,
-            prompt_2,
-            device,
-            1,
-            True,
-            negative_prompt,
-            negative_prompt_2,
-            prompt_embeds=prompt_embeds,
+        
+        prompt_embeds, negative_prompt_embeds = pipeline.encode_prompt(
+            prompt=prompt,
+            device=device,
+            num_images_per_prompt=batch_size,
+            do_classifier_free_guidance=True,
+            negative_prompt=negative_prompt,
+            prompt_embeds=prompt_embeds,            # only if you really have precomputed embeddings
             negative_prompt_embeds=negative_prompt_embeds,
-            pooled_prompt_embeds=pooled_prompt_embeds,
-            negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
-            lora_scale=text_encoder_lora_scale,
-            clip_skip=clip_skip,
         )
+        
+        # (
+        #     prompt_embeds,
+        #     negative_prompt_embeds,
+        #     pooled_prompt_embeds,
+        #     negative_pooled_prompt_embeds,
+        # ) = pipeline.encode_prompt(
+        #     prompt,
+        #     prompt_2,
+        #     device,
+        #     1,
+        #     True,
+        #     negative_prompt,
+        #     negative_prompt_2,
+        #     prompt_embeds=prompt_embeds,
+        #     negative_prompt_embeds=negative_prompt_embeds,
+        #     pooled_prompt_embeds=pooled_prompt_embeds,
+        #     negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
+        #     lora_scale=text_encoder_lora_scale,
+        #     clip_skip=clip_skip,
+        # )
     
         # 4. Prepare image
         # 4. Prepare image and controlnet_conditioning_image

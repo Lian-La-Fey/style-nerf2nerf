@@ -195,3 +195,5 @@ tmp*
 wandb/
 *.zip
 *.help
+
+*.ipynb
